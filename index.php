@@ -4,13 +4,27 @@
 function getPokemonData()
 {
     // 1) genera número aleatorio
+    $aleatorio = (string) random_int(1, 151);
     // 2) lee el contenido de la api 
+    $poke_api = file_get_contents("https://pokeapi.co/api/v2/pokemon/$aleatorio");
     // 3) lo decodifica
+    $poke_json = json_decode($poke_api, true);
     // 4) Creo un objeto pokemon (me quedo sólo con los datos que necesito):
+    $pokemon = [];
+
+
     // nombre (name)
+    $pokemon["nombre"] = $poke_json["name"];
     // imagen (sprites[front_default])
+    $pokemon["imagen"] = $poke_json["sprites"]["front_default"];
     // tipos (types[]-> dentro de cada elemento [type][name])
-    return "pokemon";
+
+    // $pokemon["tipos"]= $tipo["name"];
+
+    // habilidades
+
+
+    return $pokemon;
 }
 
 $pokemon = getPokemonData();
