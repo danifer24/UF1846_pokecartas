@@ -19,10 +19,14 @@ function getPokemonData()
     $pokemon["imagen"] = $poke_json["sprites"]["front_default"];
     // tipos (types[]-> dentro de cada elemento [type][name])
 
-    // $pokemon["tipos"]= $tipo["name"];
-
+    foreach ($poke_json["types"] as $key => $tipo) {
+        $pokemon["tipos"]["nombre"] = $tipo["type"]["name"];
+    }
+    
     // habilidades
-
+    foreach ($poke_json["abilities"] as $key => $habilidad) {
+        $pokemon["habilidades"]["nombre"] = $habilidad["ability"]["name"];
+    }
 
     return $pokemon;
 }
