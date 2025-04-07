@@ -6,27 +6,18 @@ function getPokemonData()
     // 1) genera número aleatorio
     $aleatorio = (string) random_int(1, 151);
     // 2) lee el contenido de la api 
-    $poke_api = file_get_contents("https://pokeapi.co/api/v2/pokemon/$aleatorio");
+    $poke_api = file_get_contents("https://pokeapi.co/api/v2/pokemon/1");
     // 3) lo decodifica
     $poke_json = json_decode($poke_api, true);
     // 4) Creo un objeto pokemon (me quedo sólo con los datos que necesito):
-    $pokemon = [];
-
-
-    // nombre (name)
-    $pokemon["nombre"] = $poke_json["name"];
-    // imagen (sprites[front_default])
-    $pokemon["imagen"] = $poke_json["sprites"]["front_default"];
-    // tipos (types[]-> dentro de cada elemento [type][name])
-
-    foreach ($poke_json["types"] as $key => $tipo) {
-        $pokemon["tipos"]["nombre"] = $tipo["type"]["name"];
-    }
-    
-    // habilidades
-    foreach ($poke_json["abilities"] as $key => $habilidad) {
-        $pokemon["habilidades"]["nombre"] = $habilidad["ability"]["name"];
-    }
+    $pokemon = [
+        // nombre (name)
+        "nombre" => ucwords($poke_json["name"]),
+        // imagen (sprites[front_default])
+        "imagen" => $poke_json["sprites"]["front_default"],
+        "tipos" => array_map(fn($tipo) => ucwords($tipo['type']['name']), $poke_json["types"]),
+        "habilidades" => array_map(fn($tipo) => ucwords($tipo['ability']['name']), $poke_json["abilities"])
+    ];
 
     return $pokemon;
 }
@@ -36,7 +27,28 @@ $pokemon = getPokemonData();
 
 function renderCards($pokeArray)
 {
+    global $pokemon;
     // recibe datos y genera el html
+    echo "<div class='carta'>
+            <div class='img-container'>
+                <img src=$pokemon[imagen]>
+            </div>
+            <div class='datos'>
+                <h3>$pokemon[nombre]</h3>
+                <div class='tipos-pokemon'>";
+
+    foreach ($pokemon["tipos"] as $key => $tipo) {
+        echo "<span>$tipo[$key]</span>";
+    }
+
+    echo "</div>
+                <ul class='habilidades'>";
+    foreach ($pokemon["habilidades"] as $key => $habilidad) {
+        echo "<li>$habilidad[$key]</li>";
+    }
+    echo "</ul>
+            </div>
+        </div>";
 }
 
 ?>
@@ -73,7 +85,12 @@ function renderCards($pokeArray)
         </div>
 
     </section>
+    <?php echo "<pre>";
+    print_r($pokemon);
+    echo "</pre>";
+    ?>
     <?php renderCards($pokemon) ?>
+   
 </body>
 
 </html>
