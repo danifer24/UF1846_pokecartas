@@ -22,12 +22,9 @@ function getPokemonData()
     return $pokemon;
 }
 
-$pokemon = getPokemonData();
 
-
-function renderCards($pokeArray)
+function renderCards($pokemon)
 {
-    global $pokemon;
     // recibe datos y genera el html
     echo "<div class='carta'>
             <div class='img-container'>
@@ -89,7 +86,9 @@ function renderCards($pokeArray)
     print_r($pokemon);
     echo "</pre>";
     ?>
-    <?php renderCards($pokemon) ?>
+    <?php for($i = 0; $i < 4; $i++){
+        renderCards(getPokemonData());
+        } ?>
    
 </body>
 
