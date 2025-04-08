@@ -3,13 +3,23 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#pokecartas{
+    display: flex;
+}
+
 .carta {
+   
     max-width: 200px;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    background-color: blue;
 
 
+}
+
+.fuego{
+    background-color: red;
 }
 
 .img-container {
