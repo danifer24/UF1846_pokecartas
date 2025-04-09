@@ -3,8 +3,14 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1{
+    display: flex;
+    justify-content: center;
+}
+
 #pokecartas{
     display: flex;
+    justify-content: center;
 }
 
 .carta {
